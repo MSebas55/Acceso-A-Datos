@@ -12,7 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		try (Connection con = Conexion.open()) {
-			printSQL(con, "SELECT m.alias, SUM(mp.unidades) as 'suma' FROM magos m JOIN magos_pocimas mp ON m.id = mp.idMago GROUP BY m.id ORDER BY mp.unidades DESC");
+			printSQL(con, "SELECT m.alias, SUM(mp.unidades) as 'suma', SUM(p.coste) as 'total' FROM magos m JOIN magos_pocimas mp ON m.id = mp.idMago JOIN pocimas p ON mp.idPocima = p.id GROUP BY m.id");
 		} catch (SQLException ex){
 			ex.printStackTrace();
 		}
@@ -27,9 +27,10 @@ public class Main {
 				
 				while (rs.next()) {
 					String alias = rs.getString("alias");
-					String unidades = rs.getString("suma");
+					int unidades = rs.getInt("suma");
+					double total = rs.getDouble("total");
 					
-					System.out.println(" Alias: " + alias + " Unidades: " + unidades);
+					System.out.println(" Alias: " + alias + " Unidades: " + unidades + " Coste: " + total);
 				}
 				
 			}
