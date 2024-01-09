@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import conexion.Conexion;
 
-public class Main {
+public class MainSelect {
 
 	public static void main(String[] args) {
 		
